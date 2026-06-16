@@ -33,7 +33,7 @@ jobs:
       - name: Build with Maven
         run: mvn clean package -DskipTests
 
-      - name: Login to Docker Registry
+      - name: Login to Azure Container Registry
         uses: azure/docker-login@v2
         with:
           login-server: ${{ secrets.ACR_LOGIN_SERVER }}
@@ -43,12 +43,13 @@ jobs:
       - name: Set Image Name
         run: |
           REPO_NAME=$(basename ${{ github.repository }})
-          echo "IMAGE_NAME=${{ secrets.ACR_LOGIN_SERVER }}/${{ secrets.ACR_USERNAME }}/$REPO_NAME" >> $GITHUB_ENV
+          echo "IMAGE_NAME=${{ secrets.ACR_LOGIN_SERVER }}/$REPO_NAME" >> $GITHUB_ENV
 
       - name: Build Docker Image
         run: docker build -t $IMAGE_NAME:latest .
 
       - name: Push Docker Image
         run: docker push $IMAGE_NAME:latest
+
 
 
