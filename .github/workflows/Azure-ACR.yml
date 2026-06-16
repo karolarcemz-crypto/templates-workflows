@@ -1,4 +1,3 @@
-
 name: Reusable Azure ACR Workflow
 
 on:
@@ -51,4 +50,5 @@ jobs:
 
       - name: Push Docker Image
         run: docker push $IMAGE_NAME:latest
+
 
